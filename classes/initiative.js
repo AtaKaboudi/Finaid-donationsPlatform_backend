@@ -9,7 +9,7 @@ time:String,
 current_budget:Number,
 type: String ,
 image : String,
-comment:[String],
+comments:[String],
 })
 
 

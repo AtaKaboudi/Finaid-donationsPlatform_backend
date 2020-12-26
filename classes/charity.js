@@ -9,6 +9,7 @@ const charitySchema = mongoose.Schema ({
   contact:[String],
   representative:String,
   slogan:String,
+  numberOfRatings: Number,
 })
 
 module.exports = mongoose.model('Charity',charitySchema);

@@ -1,7 +1,11 @@
 const express = require ("express");
 const  mongoose  = require("mongoose");
 const router = express.Router();
-const Charity = require ('../classes/charity')
+var bodyParser = require('body-parser')
+const Charity = require ('../classes/charity');
+const charity = require("../classes/charity");
+
+var jsonParser = bodyParser.json()
 
 // get main ninfo 
 router.get('/',(req,res)=>{
@@ -17,6 +21,8 @@ router.get('/',(req,res)=>{
 })
 
 
+// get chairty by id
+
 router.get('/:charityID', function(req,res,next){
     Charity.find({_id : req.params.charityID})
     .exec()
@@ -27,6 +33,9 @@ router.get('/:charityID', function(req,res,next){
     .catch((err)=>console.log(err));
     
     })
+
+
+    //get chairty by name 
 
     router.get('/name/:charityName', function(req,res,next){
 
@@ -39,6 +48,30 @@ router.get('/:charityID', function(req,res,next){
         .catch((err)=>console.log(err));
         
         })
+
+      
+       
+
+
+
+
+
+        // Change Rating
+     router.post('/rating',jsonParser, async function(req,res,next){ 
+         let newRating = 0;
+        console.log('[POST] charity / rating')
+       await Charity.find({name : req.body.name}).exec().then((res)=>{
+            if ((req.body.rating == 1) &&(res[0].rating != 10)) {
+                 newRating = res[0].rating + 0.1;
+            }
+            if ((req.body.rating == -1 ) && (res[0].rating != 0)) {
+                 newRating = res[0].rating - 0.1 ;
+            }
+        })
+        await Charity.update({name: req.body.name}, {rating : Math.round(newRating*10)/10 });
+    })
+
+    
 
 
 

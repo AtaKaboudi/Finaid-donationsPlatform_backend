@@ -3,7 +3,6 @@ const mongoose = require ('mongoose')
 const express = require('express');
 const app = express();
 const cors = require ('cors');
-const bodyParser= require('body-parser');
 const { send } = require('process');
 const Charity = require ('./classes/charity');
 

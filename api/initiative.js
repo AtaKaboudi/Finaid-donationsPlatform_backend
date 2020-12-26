@@ -1,7 +1,9 @@
 const express = require ("express");
 const  mongoose  = require("mongoose");
 const router = express.Router();
-const Initiative = require ('../classes/initiative')
+const Initiative = require ('../classes/initiative');
+const bodyParser = require ('body-parser');
+var jsonParser = bodyParser.json()
 
 router.get('/', function(req,res,next){
 Initiative.find({},'type name charity current_budget image  ')
@@ -74,6 +76,12 @@ router.get('/:initiativeId', function(req,res,next){
     })
     .catch((err)=>console.log(err));
     
+    })
+
+    router.post ('/comment',jsonParser,async function (req,res,next){
+        console.log('[POST] initiative / comment');
+        Initiative.findOneAndUpdate({_id : req.body.id}, {comments:req.body.comments}).exec().then((res)=>{console.log(res)});  
+        
     })
 
 
