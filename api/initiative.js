@@ -78,7 +78,7 @@ router.get('/:initiativeId', function(req,res,next){
     
     })
 
-    router.post ('/comment',jsonParser,async function (req,res,next){
+    router.post ('/comment',jsonParser, function (req,res,next){
         console.log('[POST] initiative / comment');
         Initiative.findOneAndUpdate({_id : req.body.id}, {comments:req.body.comments}).exec().then((res)=>{console.log(res)});  
         

@@ -10,6 +10,9 @@ const charitySchema = mongoose.Schema ({
   representative:String,
   slogan:String,
   numberOfRatings: Number,
+  username:String,
+  pasword:String,
+ 
 })
 
 module.exports = mongoose.model('Charity',charitySchema);

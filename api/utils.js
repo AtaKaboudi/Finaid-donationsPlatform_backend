@@ -22,6 +22,8 @@ res.status(200).json(searchUtils);
 
 module.exports = router;
 
+
+
 searchUtils = [
   ["Rotaract Cosmo ","Rotaract Alpha","Leo Marsa",
 "Croissant Rouge Ariana", "Rotaract ESSEC",

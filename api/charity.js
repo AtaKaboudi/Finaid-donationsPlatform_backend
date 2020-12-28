@@ -49,6 +49,19 @@ router.get('/:charityID', function(req,res,next){
         
         })
 
+        //handels login
+
+    router.get('/auth/:username/:password',(req,res,next)=>{
+        console.log("[GET] charity/auth");
+
+     Charity.exists({username:req.params.username,password:req.params.password},(err,resu)=>{
+         if(err){
+             res.send(err)
+         }else {
+             res.send(resu);
+         }
+     });
+    })
       
        
 
