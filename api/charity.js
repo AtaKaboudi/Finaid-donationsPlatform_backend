@@ -51,17 +51,37 @@ router.get('/:charityID', function(req,res,next){
 
         //handels login
 
-    router.get('/auth/:username/:password',(req,res,next)=>{
+    router.get('/auth/:username/:password',async (req,res,next)=> {
         console.log("[GET] charity/auth");
+       let found 
+       let id ;
+   await  Charity.exists({username:req.params.username,password:req.params.password},(err,resu)=>{
+     if(err){
+         res.send(err)
 
-     Charity.exists({username:req.params.username,password:req.params.password},(err,resu)=>{
-         if(err){
-             res.send(err)
-         }else {
-             res.send(resu);
-         }
+     }else{
+         found = resu;
+     }
      });
-    })
+    await  Charity.find({username:req.params.username,password:req.params.password}).exec().then((resu)=>{  
+        try{
+          id = resu[0]._id;
+        }catch(error) {
+            console.log(error);
+            id ="0";
+        } 
+        
+        });
+    
+    console.log(found +"/"+ id)
+    res.send({
+        "exists": found ,
+        "id" : id ,
+    });
+        })
+
+
+
       
        
 

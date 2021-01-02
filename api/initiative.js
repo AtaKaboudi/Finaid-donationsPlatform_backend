@@ -78,6 +78,30 @@ router.get('/:initiativeId', function(req,res,next){
     
     })
 
+
+//find initiative by name and name of charity 
+router.get('/names/:eventName/:charityName',function(req,res,next){
+    console.log(req.params.eventName+"/"+req.params.charityName +'/')
+    Initiative.find({name:req.params.eventName,charity:req.params.charityName}).exec().then((resu,err)=>{
+        if(err){
+            console.log(err)
+        }else{
+        res.send(resu[0]._id);
+        }
+    })
+})
+router.get('/namesAll/:eventName/:charityName',function(req,res,next){
+    console.log(req.params.eventName+"/"+req.params.charityName +'/')
+    Initiative.find({name:req.params.eventName,charity:req.params.charityName}).exec().then((resu,err)=>{
+        if(err){
+            console.log(err)
+        }else{
+        res.send(resu);
+        }
+    })
+})
+
+
     router.post ('/comment',jsonParser, function (req,res,next){
         console.log('[POST] initiative / comment');
         Initiative.findOneAndUpdate({_id : req.body.id}, {comments:req.body.comments}).exec().then((res)=>{console.log(res)});  
