@@ -11,7 +11,8 @@ const charitySchema = mongoose.Schema ({
   slogan:String,
   numberOfRatings: Number,
   username:String,
-  pasword:String,
+  password:String,
+  logo: String,
  
 })
 

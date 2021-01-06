@@ -62,3 +62,13 @@ topEvents = [{
    value : 1503,
  }
  ]
+
+
+ function addCharity() {
+this.stats.forEach(element => {
+  if(element.title == 'Active Charities'){
+    element.value ++ ;
+  }
+  
+});
+ }

@@ -3,8 +3,7 @@ const  mongoose  = require("mongoose");
 const router = express.Router();
 var bodyParser = require('body-parser')
 const Charity = require ('../classes/charity');
-const charity = require("../classes/charity");
-
+const utils =require ('./utils')
 var jsonParser = bodyParser.json()
 
 // get main ninfo 
@@ -78,6 +77,33 @@ router.get('/:charityID', function(req,res,next){
         "exists": found ,
         "id" : id ,
     });
+        })
+
+
+        //SIGN IN create charity with usernaùe pass and name and return it's id
+
+        router.post('/signup/:charityName/:username/:password',(req,res,next)=>{
+            console.log('[POST] signUp')
+            let charity = new Charity({
+                _id : new mongoose.Types.ObjectId(),
+                name : req.params.charityName,
+                username : req.params.username,
+                password : req.params.password,
+            })
+            charity.save().catch((err)=>console.log(err));
+            
+            //Add cahrity in stats
+            utils.addCharity();
+            res.status(200).send(charity._id)
+
+        })
+
+        // UPDATE CHARITY INFO ALL BUT SIGN UP ATTRIBUTES
+        router.post('/update/:item',jsonParser,(req,res,next)=>{
+            console.log('[POST] Update Charity')    
+           Charity.findOneAndUpdate({_id:req.body.id},{[req.params.item] : req.body.newValue}).catch((err)=>{console.log(err)})
+        console.log('[Change] ['+req.params.item+']  ==> '+req.body.newValue)
+           res.status(200).send('Updated');
         })
 
 
